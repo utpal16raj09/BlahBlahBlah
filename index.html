@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BlahBlahBlah</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="theme.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <!-- Add syntax highlighting -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/styles/default.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/highlight.min.js"></script>
+</head>
+<body>
+    <div class="app-container">
+        <header class="app-header">
+            <div class="app-title">
+                <i class="fas fa-edit"></i>
+                <h1>BlahBlahBlah</h1>
+            </div>
+            <div class="app-controls">
+
+                <!-- Simple Dark/Light Mode Toggle -->
+                <div class="theme-toggle-container">
+                    <button id="theme-toggle" title="Toggle Dark/Light Mode">
+                        <i class="fas fa-moon" id="dark-icon"></i>
+                        <i class="fas fa-sun" id="light-icon" style="display: none;"></i>
+                    </button>
+                </div>
+            </div>
+        </header>
+
+        <div class="toolbar">
+            <div class="toolbar-group">
+                <button id="new-file" title="New File"><i class="fas fa-file"></i></button>
+                <button id="open-file" title="Open File"><i class="fas fa-folder-open"></i></button>
+                <button id="save-file" title="Save File"><i class="fas fa-save"></i></button>
+                <div class="dropdown">
+                    <button id="export-btn" title="Export"><i class="fas fa-file-export"></i></button>
+                    <div class="dropdown-content">
+                        <a href="#" data-export="txt">Export as .txt</a>
+                        <a href="#" data-export="html">Export as .html</a>
+                        <a href="#" data-export="pdf">Export as .pdf</a>
+                    </div>
+                </div>
+            </div>
+            <div class="toolbar-group">
+                <button id="undo" title="Undo"><i class="fas fa-undo"></i></button>
+                <button id="redo" title="Redo"><i class="fas fa-redo"></i></button>
+            </div>
+            <div class="toolbar-group">
+                <button id="cut" title="Cut"><i class="fas fa-cut"></i></button>
+                <button id="copy" title="Copy"><i class="fas fa-copy"></i></button>
+                <button id="paste" title="Paste"><i class="fas fa-paste"></i></button>
+            </div>
+
+            <div class="toolbar-group font-controls">
+
+                <select id="font-size" title="Font Size">
+                    <option value="10px">10px</option>
+                    <option value="12px">12px</option>
+                    <option value="14px" selected>14px</option>
+                    <option value="16px">16px</option>
+                    <option value="18px">18px</option>
+                    <option value="20px">20px</option>
+                    <option value="24px">24px</option>
+                    <option value="28px">28px</option>
+                    <option value="32px">32px</option>
+                    <option value="36px">36px</option>
+                    <option value="42px">42px</option>
+                    <option value="48px">48px</option>
+                    <option value="56px">56px</option>
+                    <option value="64px">64px</option>
+                    <option value="72px">72px</option>
+                </select>
+            </div>
+            <div class="toolbar-group text-style">
+                <button id="bold" title="Bold"><i class="fas fa-bold"></i></button>
+                <button id="italic" title="Italic"><i class="fas fa-italic"></i></button>
+                <button id="underline" title="Underline"><i class="fas fa-underline"></i></button>
+                <button id="strikethrough" title="Strikethrough"><i class="fas fa-strikethrough"></i></button>
+                <div class="dropdown">
+                    <button id="text-color" title="Text Color"><i class="fas fa-palette"></i></button>
+                    <div class="dropdown-content color-picker">
+                        <input type="color" id="text-color-picker" value="#333333">
+                    </div>
+                </div>
+                <div class="dropdown">
+                    <button id="highlight-color" title="Highlight Color"><i class="fas fa-highlighter"></i></button>
+                    <div class="dropdown-content color-picker">
+                        <input type="color" id="highlight-color-picker" value="#ffff00">
+                    </div>
+                </div>
+            </div>
+            <div class="toolbar-group text-align">
+                <button id="align-left" title="Align Left"><i class="fas fa-align-left"></i></button>
+                <button id="align-center" title="Align Center"><i class="fas fa-align-center"></i></button>
+                <button id="align-right" title="Align Right"><i class="fas fa-align-right"></i></button>
+                <button id="align-justify" title="Justify"><i class="fas fa-align-justify"></i></button>
+            </div>
+            <div class="toolbar-group">
+                <button id="indent-increase" title="Increase Indent"><i class="fas fa-indent"></i></button>
+                <button id="indent-decrease" title="Decrease Indent"><i class="fas fa-outdent"></i></button>
+            </div>
+            <div class="toolbar-group">
+                <button id="line-spacing" title="Line Spacing"><i class="fas fa-text-height"></i></button>
+                <button id="spell-check" title="Spell Check"><i class="fas fa-spell-check"></i></button>
+            </div>
+        </div>
+
+        <div class="editor-container">
+            <div class="line-numbers" id="line-numbers"></div>
+            <div id="editor" contenteditable="true" spellcheck="false"></div>
+        </div>
+
+        <div class="status-bar">
+            <div class="status-info">
+                <span id="cursor-position">Line: 1, Column: 0</span>
+                <span id="word-count">Words: 0, Characters: 0</span>
+            </div>
+            <div class="status-info">
+                <span id="file-info">Untitled</span>
+                <span id="modified-indicator" class="hidden">*</span>
+                <span id="auto-save-indicator" class="hidden"><i class="fas fa-save"></i> Auto-saved</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Dialogs -->
+
+    <!-- Line Spacing Dialog -->
+    <div id="line-spacing-dialog" class="dialog hidden">
+        <div class="dialog-header">
+            <h3>Line Spacing</h3>
+            <button id="close-line-spacing"><i class="fas fa-times"></i></button>
+        </div>
+        <div class="dialog-content">
+            <div class="input-group">
+                <label for="line-height-value">Line Height:</label>
+                <input type="range" id="line-height-value" min="1" max="3" step="0.1" value="1.5">
+                <span id="line-height-display">1.5</span>
+            </div>
+            <div class="input-group">
+                <label for="paragraph-spacing">Paragraph Spacing:</label>
+                <input type="range" id="paragraph-spacing" min="0" max="30" step="1" value="0">
+                <span id="paragraph-spacing-display">0px</span>
+            </div>
+            <div class="dialog-buttons">
+                <button id="apply-spacing">Apply</button>
+                <button id="cancel-spacing">Cancel</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Keyboard Shortcuts Help Dialog -->
+    <div id="shortcuts-dialog" class="dialog hidden">
+        <div class="dialog-header">
+            <h3>Keyboard Shortcuts</h3>
+            <button id="close-shortcuts"><i class="fas fa-times"></i></button>
+        </div>
+        <div class="dialog-content shortcuts-content">
+            <h4>General Shortcuts</h4>
+            <table>
+                <tr><th>Action</th><th>Shortcut</th></tr>
+                <tr><td>New File</td><td>Ctrl+N</td></tr>
+                <tr><td>Open File</td><td>Ctrl+O</td></tr>
+                <tr><td>Save File</td><td>Ctrl+S</td></tr>
+                <tr><td>Save As</td><td>Ctrl+Shift+S</td></tr>
+                <tr><td>Print</td><td>Ctrl+P</td></tr>
+                <tr><td>Close Document</td><td>Ctrl+W</td></tr>
+                <tr><td>Close Application</td><td>Ctrl+Q or Alt+F4</td></tr>
+                <tr><td>Undo</td><td>Ctrl+Z</td></tr>
+                <tr><td>Redo</td><td>Ctrl+Y or Ctrl+Shift+Z</td></tr>
+                <tr><td>Select All</td><td>Ctrl+A</td></tr>
+
+                <tr><td>Keyboard Shortcuts</td><td>F1</td></tr>
+            </table>
+            
+            <h4>Text Formatting</h4>
+            <table>
+                <tr><th>Action</th><th>Shortcut</th></tr>
+                <tr><td>Bold</td><td>Ctrl+B</td></tr>
+                <tr><td>Italic</td><td>Ctrl+I</td></tr>
+                <tr><td>Underline</td><td>Ctrl+U</td></tr>
+                <tr><td>Left Align</td><td>Ctrl+L</td></tr>
+                <tr><td>Center Align</td><td>Ctrl+E</td></tr>
+                <tr><td>Right Align</td><td>Ctrl+R</td></tr>
+                <tr><td>Justify Text</td><td>Ctrl+Shift+L</td></tr>
+            </table>
+            
+            <h4>Clipboard Operations</h4>
+            <table>
+                <tr><th>Action</th><th>Shortcut</th></tr>
+                <tr><td>Cut</td><td>Ctrl+X</td></tr>
+                <tr><td>Copy</td><td>Ctrl+C</td></tr>
+                <tr><td>Paste</td><td>Ctrl+V</td></tr>
+                <tr><td>Paste as Plain Text</td><td>Ctrl+Shift+V</td></tr>
+            </table>
+            
+            <h4>Text Editing</h4>
+            <table>
+                <tr><th>Action</th><th>Shortcut</th></tr>
+                <tr><td>Delete Text After Cursor</td><td>Ctrl+K</td></tr>
+                <tr><td>Delete Text Before Cursor</td><td>Ctrl+Shift+K</td></tr>
+                <tr><td>Duplicate Line/Selection</td><td>Ctrl+D</td></tr>
+                <tr><td>Delete Line/Selection</td><td>Ctrl+Shift+D</td></tr>
+            </table>
+            
+            <h4>Navigation</h4>
+            <table>
+                <tr><th>Action</th><th>Shortcut</th></tr>
+                <tr><td>Move to Line Start</td><td>Home</td></tr>
+                <tr><td>Move to Line End</td><td>End</td></tr>
+                <tr><td>Move to Document Start</td><td>Ctrl+Home</td></tr>
+                <tr><td>Move to Document End</td><td>Ctrl+End</td></tr>
+                <tr><td>Move Word Left</td><td>Ctrl+Left Arrow</td></tr>
+                <tr><td>Move Word Right</td><td>Ctrl+Right Arrow</td></tr>
+            </table>
+        </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <!-- Simple Dark/Light Mode Toggle Script -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const themeToggle = document.getElementById('theme-toggle');
+            const darkIcon = document.getElementById('dark-icon');
+            const lightIcon = document.getElementById('light-icon');
+            
+            // Check if dark mode is saved in localStorage
+            const isDarkMode = localStorage.getItem('darkMode') === 'true';
+            
+            // Apply initial theme
+            if (isDarkMode) {
+                document.body.classList.add('theme-dark');
+                document.body.classList.remove('theme-light');
+                darkIcon.style.display = 'none';
+                lightIcon.style.display = 'inline';
+            } else {
+                document.body.classList.add('theme-light');
+                document.body.classList.remove('theme-dark');
+                darkIcon.style.display = 'inline';
+                lightIcon.style.display = 'none';
+            }
+            
+            // Toggle theme when button is clicked
+            themeToggle.addEventListener('click', function() {
+                const isDark = document.body.classList.contains('theme-dark');
+                
+                if (isDark) {
+                    // Switch to light mode
+                    document.body.classList.remove('theme-dark');
+                    document.body.classList.add('theme-light');
+                    darkIcon.style.display = 'inline';
+                    lightIcon.style.display = 'none';
+                    localStorage.setItem('darkMode', 'false');
+                } else {
+                    // Switch to dark mode
+                    document.body.classList.remove('theme-light');
+                    document.body.classList.add('theme-dark');
+                    darkIcon.style.display = 'none';
+                    lightIcon.style.display = 'inline';
+                    localStorage.setItem('darkMode', 'true');
+                }
+            });
+        });
+    </script>
+    
+    <script src="app.js"></script>
+</body>
+</html>

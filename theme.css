@@ -1,0 +1,74 @@
+/* Dark/Light Mode Toggle Styles */
+.theme-toggle-container {
+    display: flex;
+    align-items: center;
+}
+
+#theme-toggle {
+    background: none;
+    border: none;
+    color: var(--text-color);
+    font-size: 1.2rem;
+    cursor: pointer;
+    padding: 8px;
+    border-radius: 50%;
+    transition: background-color 0.2s, transform 0.3s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+#theme-toggle:hover {
+    background-color: var(--hover-bg);
+    transform: rotate(15deg);
+}
+
+#theme-toggle:active {
+    transform: scale(0.9);
+}
+
+#dark-icon, #light-icon {
+    width: 1em;
+    height: 1em;
+}
+
+/* Theme Classes */
+.theme-light {
+    --bg-color: #f8f9fa;
+    --text-color: #2d3748;
+    --border-color: #e2e8f0;
+    --hover-bg: #edf2f7;
+    --hover-color: #1a202c;
+    --editor-bg: #ffffff;
+    --line-numbers-bg: #f1f5f9;
+    --line-numbers-color: #718096;
+    --toolbar-bg: #e2e8f0;
+    --dropdown-bg: #ffffff;
+    --dropdown-hover: #edf2f7;
+    --selection-bg: #90cdf4;
+    --selection-color: #1a202c;
+    --status-bar-bg: #e2e8f0;
+    --dialog-bg: #ffffff;
+    --dialog-header-bg: #f1f5f9;
+    --accent-color: #3182ce;
+}
+
+.theme-dark {
+    --bg-color: #1e1e1e;
+    --text-color: #d4d4d4;
+    --border-color: #444444;
+    --hover-bg: #2a2a2a;
+    --hover-color: #ffffff;
+    --editor-bg: #1e1e1e;
+    --line-numbers-bg: #252525;
+    --line-numbers-color: #858585;
+    --toolbar-bg: #252525;
+    --dropdown-bg: #2d2d2d;
+    --dropdown-hover: #3a3a3a;
+    --selection-bg: #264f78;
+    --selection-color: #ffffff;
+    --status-bar-bg: #252525;
+    --dialog-bg: #2d2d2d;
+    --dialog-header-bg: #252525;
+    --accent-color: #4a86e8;
+}
